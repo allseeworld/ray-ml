@@ -12,27 +12,37 @@ spec:
   serveConfig:
     importPath: fruit.deployment_graph
     runtimeEnv: |
-      working_dir: "http://20.6.1.65:9265/datamining/ray-ml/-/archive/master/ray-ml-master.zip"
+      working_dir: "https://github.com/ray-project/test_dag/archive/c620251044717ace0a4c19d766d43c5099af8a77.zip"
     deployments:
       - name: MangoStand
         numReplicas: 1
-        userConfig: '{"price": 3}'
-
+        userConfig: |
+          price: 3
+        rayActorOptions:
+          numCpus: 0.1
       - name: OrangeStand
         numReplicas: 1
-        userConfig: '{"price": 2}'
-
+        userConfig: |
+          price: 2
+        rayActorOptions:
+          numCpus: 0.1
       - name: PearStand
         numReplicas: 1
-        userConfig: '{"price": 4}'
-
+        userConfig: |
+          price: 1
+        rayActorOptions:
+          numCpus: 0.1
       - name: FruitMarket
-        numReplicas: 2
-
+        numReplicas: 1
+        rayActorOptions:
+          numCpus: 0.1
       - name: DAGDriver
-        routePrefix: /
+        numReplicas: 1
+        routePrefix: "/"
+        rayActorOptions:
+          numCpus: 0.1
   rayClusterConfig:
-    rayVersion: '2.3.0' # should match the Ray version in the image of the containers
+    rayVersion: '2.0.0' # should match the Ray version in the image of the containers
     ######################headGroupSpecs#################################
     # head group template and specs, (perhaps 'group' is not needed in the name)
     headGroupSpec:

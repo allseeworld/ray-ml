@@ -12,13 +12,13 @@ from typing import Dict, List
 from starlette.requests import Request
 
 
-@serve.deployment(num_replicas=2)
+@serve.deployment(num_replicas=1, ray_actor_options={"num_cpus": 0.2})
 class FruitMarket:
     def __init__(
-        self,
-        mango_stand: RayServeDeploymentHandle,
-        orange_stand: RayServeDeploymentHandle,
-        pear_stand: RayServeDeploymentHandle,
+            self,
+            mango_stand: RayServeDeploymentHandle,
+            orange_stand: RayServeDeploymentHandle,
+            pear_stand: RayServeDeploymentHandle,
     ):
         self.directory = {
             "MANGO": mango_stand,
@@ -36,9 +36,8 @@ class FruitMarket:
             return result
 
 
-@serve.deployment(user_config={"price": 3})
+@serve.deployment(user_config={"price": 3}, ray_actor_options={"num_cpus": 0.2})
 class MangoStand:
-
     DEFAULT_PRICE = 1
 
     def __init__(self):
@@ -53,9 +52,8 @@ class MangoStand:
         return self.price * amount
 
 
-@serve.deployment(user_config={"price": 2})
+@serve.deployment(user_config={"price": 2}, ray_actor_options={"num_cpus": 0.2})
 class OrangeStand:
-
     DEFAULT_PRICE = 0.5
 
     def __init__(self):
@@ -70,9 +68,8 @@ class OrangeStand:
         return self.price * amount
 
 
-@serve.deployment(user_config={"price": 4})
+@serve.deployment(user_config={"price": 4}, ray_actor_options={"num_cpus": 0.2})
 class PearStand:
-
     DEFAULT_PRICE = 0.75
 
     def __init__(self):
